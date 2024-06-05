@@ -15,9 +15,9 @@
 
 
     <xacro:property name="trolley_wheel_mass" value="0.1"/>
-    <xacro:property name="trolley_track_width" value="0.74"/>
+    <xacro:property name="trolley_track_width" value="0.84"/>
     <xacro:property name="trolley_wheel_friction" value="0.0"/>
-    <xacro:property name="trolley_wheel_radius" value="0.05"/>
+    <xacro:property name="trolley_wheel_radius" value="0.08"/>
     <!-- a small constant -->
     <xacro:property name="eps" value="0.002"/>
 
@@ -26,7 +26,7 @@
     <xacro:property name="traction_track_width" value="0.6"/>
 
 
-        <!-- ............................... LOAD MACROS ................................. -->
+    <!-- LOAD MACROS -->
 
     <xacro:include filename="macros.xacro"/>
 
@@ -62,8 +62,8 @@
             <geometry>
                 <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
             </geometry>
-            <material name="aluminium">
-                <color rgba="0.5 0.5 0.5 1"/>
+            <material name="white">
+                <color rgba="1.0 1.0 1.0 1.0"/>
             </material>
         </visual>
         <collision>
@@ -81,13 +81,14 @@
     <!-- MIDDLE WHEELS COLLISION AND VISUAL GEOMETRY -->
     <!--xacro:traction_wheel cardinality="middle" dexterity="left" origin_x="0" origin_y="${traction_track_width/2}" origin_z="-${chassis_height/2+2*trolley_wheel_radius+eps-traction_wheel_radius}"/-->
     <!--xacro:traction_wheel cardinality="middle" dexterity="right" origin_x="0" origin_y="-${traction_track_width/2}" origin_z="-${chassis_height/2+2*trolley_wheel_radius+eps-traction_wheel_radius}"/-->
-       <joint name="middle_wheel_left_joint" type="continuous">
+    <joint name="middle_wheel_left_joint" type="continuous">
         <parent link="base_link"/>
         <child link="middle_wheel_left_visual"/>
         <!--origin xyz="0 ${traction_track_width/2} -${chassis_height/2+2*trolley_wheel_radius+eps-traction_wheel_radius}" rpy="-1.57 0 0"/-->
         <origin xyz="0 0.345 0" rpy="-${pi/2} 0 0"/>
         <axis xyz="0 0 1"/>
     </joint>
+
     <link name="middle_wheel_left_visual">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -95,6 +96,9 @@
             <geometry>
                 <cylinder radius="${traction_wheel_radius}" length="${traction_wheel_width}"/>
             </geometry>
+            <material name="plastic">
+                <color rgba="0.1 0.1 0.1 1"/>
+            </material>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -117,6 +121,9 @@
             <geometry>
                 <cylinder radius="${traction_wheel_radius}" length="${traction_wheel_width}"/>
             </geometry>
+            <material name="plastic">
+                <color rgba="0.1 0.1 0.1 1"/>
+            </material>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -126,12 +133,17 @@
         </collision>
     </link>
 
+
+
     <!-- CASTER WHEELS -->
+
+
+
     <!-- Front Left Caster Wheel -->
     <joint name="front_left_caster_joint" type="fixed">
         <parent link="base_link"/>
         <child link="front_left_caster_visual"/>
-        <origin xyz="${chassis_length/2} ${trolley_track_width/2} -${trolley_wheel_radius+chassis_height/2}"/>
+        <origin xyz="0.32 0.240 -0.02"/>
     </joint>
     <link name="front_left_caster_visual">
         <visual>
@@ -139,6 +151,9 @@
             <geometry>
                 <sphere radius="${trolley_wheel_radius}"/>
             </geometry>
+            <material name="black">
+                <color rgba="0.0 0.0 0.0 1.0"/>
+            </material>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -147,11 +162,13 @@
             </geometry>
         </collision>
     </link>
+
+
     <!-- Front Right Caster Wheel -->
     <joint name="front_right_caster_joint" type="fixed">
         <parent link="base_link"/>
         <child link="front_right_caster_visual"/>
-        <origin xyz="${chassis_length/2} -${trolley_track_width/2} -${trolley_wheel_radius+chassis_height/2}"/>
+        <origin xyz="0.32 -0.240 -0.02"/>
     </joint>
     <link name="front_right_caster_visual">
         <visual>
@@ -159,6 +176,9 @@
             <geometry>
                 <sphere radius="${trolley_wheel_radius}"/>
             </geometry>
+            <material name="black">
+                <color rgba="0.0 0.0 0.0 1.0"/>
+            </material>            
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -167,6 +187,57 @@
             </geometry>
         </collision>
     </link>
+
+
+        <!-- back Left Caster Wheel -->
+    <joint name="back_left_caster_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="back_left_caster_visual"/>
+        <origin xyz="-0.32 0.240 -0.02"/>
+    </joint>
+    <link name="back_left_caster_visual">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="${trolley_wheel_radius}"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="${trolley_wheel_radius}"/>
+            </geometry>
+        </collision>
+    </link>
+
+
+    <!-- back Right Caster Wheel -->
+    <joint name="back_right_caster_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="back_right_caster_visual"/>
+        <origin xyz="-0.32 -0.240 -0.02"/>
+    </joint>
+    <link name="back_right_caster_visual">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="${trolley_wheel_radius}"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                    <sphere radius="${trolley_wheel_radius}"/>
+            </geometry>
+        </collision>
+    </link>
+
 
 
 </robot>
