@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tars_bot">
+
+    <!-- ........................... SENSOR PLUGIN ................................... -->
+
+    <gazebo>
+        <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+            <render_engine>ogre2</render_engine>
+        </plugin>
+
+        <plugin filename="ignition-gazebo-imu-system" name="ignition::gazebo::systems::Imu">
+        </plugin>
+
+        <plugin filename="ignition-gazebo-joint-state-publisher-system" name="ignition::gazebo::systems::JointStatePublisher">
+        </plugin>
+
+        <!-- ........................... DIFFERENTIAL DRIVE PLUGIN ................................... -->
+
+        <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
+            <left_joint>middle_wheel_left_joint</left_joint>
+            <right_joint>middle_wheel_right_joint</right_joint>
+            <wheel_separation>${traction_track_width+traction_wheel_width-0.01}</wheel_separation>
+            <wheel_radius>${traction_wheel_radius+0.01}</wheel_radius>
+            <odom_publish_frequency>30</odom_publish_frequency>
+            <topic>/cmd_vel</topic>
+            <xacro:if value="${odometry_source == 'encoders'}">
+                <odom_topic>$(arg wheel_odom_topic)</odom_topic>
+                <tf_topic>/tf</tf_topic>
+            </xacro:if>
+            <frame_id>odom</frame_id>
+            <child_frame_id>base_footprint</child_frame_id>
+        </plugin>
+    </gazebo>
+
+    <!-- ............................. ground truth .................................... -->
+
+    <xacro:if value="${odometry_source == 'world'}">
+    <gazebo>
+        <plugin filename="libignition-gazebo6-odometry-publisher-system"
+            name="ignition::gazebo::systems::OdometryPublisher">
+            <odom_frame>odom</odom_frame>
+            <robot_base_frame>base_footprint</robot_base_frame>
+            <odom_topic>$(arg wheel_odom_topic)</odom_topic>
+            <tf_topic>/tf</tf_topic>
+            <dimensions>2</dimensions>
+            <odom_publish_frequency>10</odom_publish_frequency>
+        </plugin>
+    </gazebo>
+    </xacro:if>
+
+    <!-- ........................... 2D LIDAR config ................................... -->
+
+    <xacro:if value="$(arg two_d_lidar_enabled)">
+        <gazebo reference="two_d_lidar">
+            <sensor name='gpu_lidar' type='gpu_lidar'>
+                <topic>scan</topic>
+                <update_rate>${two_d_lidar_update_rate}</update_rate>
+                <ignition_frame_id>two_d_lidar</ignition_frame_id>
+                <lidar>
+                    <scan>
+                        <horizontal>
+                            <samples>${two_d_lidar_sample_size}</samples>
+                            <resolution>1</resolution>
+                            <min_angle>${radians(two_d_lidar_min_angle)}</min_angle>
+                            <max_angle>${radians(two_d_lidar_max_angle)}</max_angle>
+                        </horizontal>
+                    </scan>
+                    <range>
+                        <min>${two_d_lidar_min_range}</min>
+                        <max>${two_d_lidar_max_range}</max>
+                        <resolution>0.01</resolution>
+                    </range>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.001</stddev>
+                    </noise>
+                </lidar>
+                <alwaysOn>1</alwaysOn>
+                <visualize>true</visualize>
+            </sensor>
+        </gazebo>
+    </xacro:if>
+
+    <!-- ........................... CAMERA config ................................... -->
+
+
+
+    <!-- ........................... IMU config ................................... -->
+
+    <gazebo reference="imu_frame">
+        <sensor name="imu_sensor" type="imu">
+            <always_on>1</always_on>
+            <update_rate>1</update_rate>
+            <ignition_frame_id>imu_frame</ignition_frame_id>
+            <visualize>true</visualize>
+            <topic>imu</topic>
+        </sensor>
+    </gazebo>
+
+    <!-- ........................... Stereo camera ................................... -->
+
+</robot>

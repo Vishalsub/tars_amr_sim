@@ -1,6 +1,8 @@
 <?xml version='1.0'?>
 <robot xmlns:xacro='http://www.ros.org/wiki/xacro' >
 
+    
+
     <!-- XACRO CONSTANTS  -->
     <xacro:property name="chassis_length" value="0.9"/>
     <xacro:property name="chassis_width" value="0.64"/>
@@ -25,27 +27,58 @@
     <xacro:property name="traction_wheel_width" value="0.05"/>
     <xacro:property name="traction_track_width" value="0.6"/>
 
+    <xacro:property name="two_d_lidar_update_rate" value="30"/>
+    <xacro:property name="two_d_lidar_sample_size" value="361"/>
+    <xacro:property name="two_d_lidar_min_angle" value="0"/>
+    <xacro:property name="two_d_lidar_max_angle" value="360"/>
+    <xacro:property name="two_d_lidar_min_range" value="0.55"/>
+    <xacro:property name="two_d_lidar_max_range" value="16"/>
+
+    <xacro:property name="camera_baseline" value="0.06"/>
+    <xacro:property name="camera_height" value="0.10"/>
+    <xacro:property name="camera_horizontal_fov" value="60"/>
+
+    <xacro:arg name="robot_namespace" default=""/>
+    <xacro:arg name="wheel_odom_topic" default="odom" />
+    <xacro:arg name="camera_enabled" default="false" />
+    <xacro:arg name="stereo_camera_enabled" default="false" />
+    <xacro:arg name="two_d_lidar_enabled" default="false" />
+    <xacro:arg name="publish_wheel_odom_tf" default="true" />
+    <xacro:arg name="conveyor_enabled" default="false"/>
+    <xacro:arg name="ground_truth_frame" default="map"/>
+    <xacro:arg name="sim_gazebo" default="false" />
+    <xacro:arg name="sim_gz" default="false" />
+    <xacro:arg name="odometry_source" default="world" />
+
+    <xacro:property name="odometry_source" value="$(arg odometry_source)"/>
+
+
 
     <!-- LOAD MACROS -->
 
     <xacro:include filename="macros.xacro"/>
 
+    
+    <xacro:include filename="gz.xacro"/>
+
+
 
 
     <!-- BASE LINK-->
 
-    <link name="base_link">
+    <link name="base_footprint"/>
 
-    </link>
+    <link name="base_link"/>
+
+    
 
     <joint name="base_footprint_joint" type="fixed">
-        <parent link="base_link"/>
-        <child link="base_footprint"/>
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
 
-    <link name="base_footprint">
-    </link>
+
 
 
     <!-- CHASSIS LINK -->
@@ -72,19 +105,15 @@
                 <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
             </geometry>
         </collision>
-        <inertial>
-            <mass value="${chassis_mass}" />
-            <xacro:box_inertia m="${chassis_mass}" x="${chassis_length}" y="${chassis_width}" z = "${chassis_height}"/>
-        </inertial>
+        <xacro:box_inertia mass="${chassis_mass}" x="${chassis_length}" y="${chassis_width}" z = "${chassis_height}">
+            <origin xyz="${chassis_length/2} 0 ${chassis_height/2}" rpy="0 0 0"/>
+        </xacro:box_inertia>
     </link>
 
-    <!-- MIDDLE WHEELS COLLISION AND VISUAL GEOMETRY -->
-    <!--xacro:traction_wheel cardinality="middle" dexterity="left" origin_x="0" origin_y="${traction_track_width/2}" origin_z="-${chassis_height/2+2*trolley_wheel_radius+eps-traction_wheel_radius}"/-->
-    <!--xacro:traction_wheel cardinality="middle" dexterity="right" origin_x="0" origin_y="-${traction_track_width/2}" origin_z="-${chassis_height/2+2*trolley_wheel_radius+eps-traction_wheel_radius}"/-->
+
     <joint name="middle_wheel_left_joint" type="continuous">
         <parent link="base_link"/>
         <child link="middle_wheel_left_visual"/>
-        <!--origin xyz="0 ${traction_track_width/2} -${chassis_height/2+2*trolley_wheel_radius+eps-traction_wheel_radius}" rpy="-1.57 0 0"/-->
         <origin xyz="0 0.345 0" rpy="-${pi/2} 0 0"/>
         <axis xyz="0 0 1"/>
     </joint>
@@ -106,12 +135,21 @@
                 <cylinder radius="${traction_wheel_radius}" length="${traction_wheel_width}"/>
             </geometry>
         </collision>
+        <xacro:inertial_cylinder mass="${traction_wheel_mass}" length="${traction_wheel_width}" radius="${traction_wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+
+        <gazebo>
+            <plugin filename="ignition-gazebo-joint-state-publisher-system" name="ignition::gazebo::systems::JointStatePublisher">
+                <topic>/joint_states</topic>
+                <joint_name>Middle_wheel_left_joint</joint_name>
+            </plugin>
+        </gazebo>
     </link>
 
     <joint name="middle_wheel_right_joint" type="continuous">
         <parent link="base_link"/>
         <child link="middle_wheel_right_visual"/>
-        <!--origin xyz="0 -${traction_track_width/2} -${chassis_height/2+2*trolley_wheel_radius+eps-traction_wheel_radius}" rpy="1.57 0 0"/-->
         <origin xyz="0 -0.345 0" rpy="${pi/2} 0 0"/>
         <axis xyz="0 0 -1"/>
     </joint>
@@ -131,6 +169,16 @@
                 <cylinder radius="${traction_wheel_radius}" length="${traction_wheel_width}"/>
             </geometry>
         </collision>
+        <xacro:inertial_cylinder mass="${traction_wheel_mass}" length="${traction_wheel_width}" radius="${traction_wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+
+        <gazebo>
+            <plugin filename="ignition-gazebo-joint-state-publisher-system" name="ignition::gazebo::systems::JointStatePublisher">
+                <topic>/joint_states</topic>
+                <joint_name>Middle_wheel_right_joint</joint_name>
+            </plugin>
+        </gazebo>
     </link>
 
 
@@ -146,6 +194,7 @@
         <origin xyz="0.32 0.240 -0.02"/>
     </joint>
     <link name="front_left_caster_visual">
+
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
@@ -161,6 +210,9 @@
                 <sphere radius="${trolley_wheel_radius}"/>
             </geometry>
         </collision>
+        <xacro:inertial_sphere mass="${trolley_wheel_mass}" radius="${trolley_wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_sphere>
     </link>
 
 
@@ -186,6 +238,9 @@
                     <sphere radius="${trolley_wheel_radius}"/>
             </geometry>
         </collision>
+        <xacro:inertial_sphere mass="${trolley_wheel_mass}" radius="${trolley_wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_sphere>
     </link>
 
 
@@ -196,6 +251,7 @@
         <origin xyz="-0.32 0.240 -0.02"/>
     </joint>
     <link name="back_left_caster_visual">
+
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
@@ -211,6 +267,9 @@
                 <sphere radius="${trolley_wheel_radius}"/>
             </geometry>
         </collision>
+        <xacro:inertial_sphere mass="${trolley_wheel_mass}" radius="${trolley_wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_sphere>
     </link>
 
 
@@ -221,6 +280,7 @@
         <origin xyz="-0.32 -0.240 -0.02"/>
     </joint>
     <link name="back_right_caster_visual">
+
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
@@ -236,7 +296,56 @@
                     <sphere radius="${trolley_wheel_radius}"/>
             </geometry>
         </collision>
+        <xacro:inertial_sphere mass="${trolley_wheel_mass}" radius="${trolley_wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_sphere>
     </link>
+
+    
+
+
+    <link name="two_d_lidar">
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <cylinder length="0.06" radius="0.075"/>
+                </geometry>
+            </collision>
+
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <cylinder length="0.06" radius="0.075"/>
+                </geometry>
+             <material name="black">
+                <color rgba="0.0 0.0 0.0 1.0"/>
+            </material>
+            </visual>
+            <xacro:inertial_cylinder mass="0.1" length="0.06" radius="0.075">
+                <origin xyz="0 0 0" rpy="0 0 0" />
+            </xacro:inertial_cylinder>
+
+    </link>
+
+    <joint name="two_d_lidar_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="two_d_lidar"/>
+            <origin xyz="0.0 0 0.08" rpy="0 0 0" />
+    </joint>
+
+        <gazebo reference="two_d_lidar">
+            <material>Gazebo/White</material>
+        </gazebo>
+
+  
+
+    <link name="imu_frame"/>
+
+    <joint name="imu_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="imu_frame"/>
+        <origin xyz="0.0 0.0 0.08" rpy="0.0 0.0 0.0"/>
+    </joint>
 
 
 
