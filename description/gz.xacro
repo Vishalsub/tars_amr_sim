@@ -16,7 +16,7 @@
 
         <!-- ........................... DIFFERENTIAL DRIVE PLUGIN ................................... -->
 
-        <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
+        <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
             <left_joint>middle_wheel_left_joint</left_joint>
             <right_joint>middle_wheel_right_joint</right_joint>
             <wheel_separation>${traction_track_width+traction_wheel_width-0.01}</wheel_separation>
