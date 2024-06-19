@@ -114,64 +114,64 @@
     <joint name="middle_wheel_left_joint" type="continuous">
         <parent link="base_link"/>
         <child link="middle_wheel_left_visual"/>
-        <origin xyz="0 0.345 0" rpy="-${pi/2} 0 0"/>
-        <axis xyz="0 0 1"/>
+        <origin xyz="0 ${traction_track_width/2} 0" rpy="0 0 0"/>
+        <axis xyz="0 1 0" rpy="0 0 0" />
     </joint>
 
     <link name="middle_wheel_left_visual">
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+             <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
             
             <geometry>
                 <cylinder radius="${traction_wheel_radius}" length="${traction_wheel_width}"/>
             </geometry>
+            <self_collide>false</self_collide>
             <material name="plastic">
                 <color rgba="0.1 0.1 0.1 1"/>
             </material>
         </visual>
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+             <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
             <geometry>
                 <cylinder radius="${traction_wheel_radius}" length="${traction_wheel_width}"/>
             </geometry>
+            <self_collide>false</self_collide>
         </collision>
         <xacro:inertial_cylinder mass="${traction_wheel_mass}" length="${traction_wheel_width}" radius="${traction_wheel_radius}">
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+             <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
         </xacro:inertial_cylinder>
+        <mu>5.0</mu>
 
-        <gazebo>
-            <plugin filename="ignition-gazebo-joint-state-publisher-system" name="ignition::gazebo::systems::JointStatePublisher">
-                <topic>/joint_states</topic>
-                <joint_name>Middle_wheel_left_joint</joint_name>
-            </plugin>
-        </gazebo>
     </link>
 
     <joint name="middle_wheel_right_joint" type="continuous">
         <parent link="base_link"/>
         <child link="middle_wheel_right_visual"/>
-        <origin xyz="0 -0.345 0" rpy="${pi/2} 0 0"/>
-        <axis xyz="0 0 -1"/>
+        <origin xyz="0 -${traction_track_width/2} 0" rpy="0 0 0"/>
+        <axis xyz="0 1 0" rpy="0 0 0" />
     </joint>
     <link name="middle_wheel_right_visual">
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+             <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
             <geometry>
                 <cylinder radius="${traction_wheel_radius}" length="${traction_wheel_width}"/>
             </geometry>
             <material name="plastic">
                 <color rgba="0.1 0.1 0.1 1"/>
             </material>
+            <self_collide>false</self_collide>
         </visual>
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+             <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
             <geometry>
                 <cylinder radius="${traction_wheel_radius}" length="${traction_wheel_width}"/>
             </geometry>
+            <self_collide>false</self_collide>
         </collision>
         <xacro:inertial_cylinder mass="${traction_wheel_mass}" length="${traction_wheel_width}" radius="${traction_wheel_radius}">
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
         </xacro:inertial_cylinder>
+        <mu>5.0</mu>
 
         <gazebo>
             <plugin filename="ignition-gazebo-joint-state-publisher-system" name="ignition::gazebo::systems::JointStatePublisher">
@@ -180,6 +180,26 @@
             </plugin>
         </gazebo>
     </link>
+
+    <transmission name="middle_wheel_left_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="middle_wheel_left_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="middle_wheel_left_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    </transmission>
+
+    <transmission name="middle_wheel_right_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="middle_wheel_right_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="middle_wheel_right_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    </transmission>
 
 
 
@@ -191,12 +211,13 @@
     <joint name="front_left_caster_joint" type="fixed">
         <parent link="base_link"/>
         <child link="front_left_caster_visual"/>
-        <origin xyz="0.32 0.240 -0.02"/>
+        <origin xyz="${chassis_length/2} 0.240 -0.02"/>
+        <axis xyz="0 1 0" rpy="0 0 0" />
     </joint>
     <link name="front_left_caster_visual">
 
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}"/>
             <geometry>
                 <sphere radius="${trolley_wheel_radius}"/>
             </geometry>
@@ -205,7 +226,7 @@
             </material>
         </visual>
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}"/>
             <geometry>
                 <sphere radius="${trolley_wheel_radius}"/>
             </geometry>
@@ -213,6 +234,7 @@
         <xacro:inertial_sphere mass="${trolley_wheel_mass}" radius="${trolley_wheel_radius}">
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_sphere>
+         <mu>0.0</mu>
     </link>
 
 
@@ -220,11 +242,12 @@
     <joint name="front_right_caster_joint" type="fixed">
         <parent link="base_link"/>
         <child link="front_right_caster_visual"/>
-        <origin xyz="0.32 -0.240 -0.02"/>
+        <origin xyz="${chassis_length/2} -0.240 -0.02"/>
+        <axis xyz="0 1 0" rpy="0 0 0" />
     </joint>
     <link name="front_right_caster_visual">
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}"/>
             <geometry>
                 <sphere radius="${trolley_wheel_radius}"/>
             </geometry>
@@ -241,6 +264,7 @@
         <xacro:inertial_sphere mass="${trolley_wheel_mass}" radius="${trolley_wheel_radius}">
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_sphere>
+        <mu>0.0</mu>
     </link>
 
 
@@ -248,12 +272,13 @@
     <joint name="back_left_caster_joint" type="fixed">
         <parent link="base_link"/>
         <child link="back_left_caster_visual"/>
-        <origin xyz="-0.32 0.240 -0.02"/>
+        <origin xyz="-${chassis_length/2} 0.240 -0.02"/>
+        <axis xyz="0 1 0" rpy="0 0 0" />
     </joint>
     <link name="back_left_caster_visual">
 
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}"/>
             <geometry>
                 <sphere radius="${trolley_wheel_radius}"/>
             </geometry>
@@ -270,6 +295,8 @@
         <xacro:inertial_sphere mass="${trolley_wheel_mass}" radius="${trolley_wheel_radius}">
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_sphere>
+         <mu>0.0</mu>
+        
     </link>
 
 
@@ -277,12 +304,13 @@
     <joint name="back_right_caster_joint" type="fixed">
         <parent link="base_link"/>
         <child link="back_right_caster_visual"/>
-        <origin xyz="-0.32 -0.240 -0.02"/>
+        <origin xyz="-${chassis_length/2} -0.240 -0.02"/>
+        <axis xyz="0 1 0" rpy="0 0 0" />
     </joint>
     <link name="back_right_caster_visual">
 
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}"/>
             <geometry>
                 <sphere radius="${trolley_wheel_radius}"/>
             </geometry>
@@ -299,6 +327,8 @@
         <xacro:inertial_sphere mass="${trolley_wheel_mass}" radius="${trolley_wheel_radius}">
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_sphere>
+         <mu>0.0</mu>
+        
     </link>
 
     
