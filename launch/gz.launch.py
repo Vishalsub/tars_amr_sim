@@ -13,7 +13,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time", default=True)
 
     tarsarm_sim_path = get_package_share_directory("tarsarm_sim")
-    world_file = LaunchConfiguration("world_file", default = join(tarsarm_sim_path, "worlds", "empty.sdf"))
+    world_file = LaunchConfiguration("world_file", default = join(tarsarm_sim_path, "worlds", "small_warehouse.sdf"))
     gz_sim_share = get_package_share_directory("ros_gz_sim")
 
     gz_sim = IncludeLaunchDescription(

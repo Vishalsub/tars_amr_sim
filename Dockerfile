@@ -5,9 +5,7 @@ RUN apt-get update && apt-get install -y \
     python3-colcon-common-extensions \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the package
-COPY . /my_ros2_project
-WORKDIR /my_ros2_project
+
 
 # Make entrypoint script executable
 #RUN chmod +x /my_ros2_project/docker/entrypoint.sh

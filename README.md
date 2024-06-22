@@ -1,11 +1,9 @@
-# My ROS2 Project
+# my_amr_robot
 
-This is a simple ROS2 project to demonstrate package organization, Docker integration, CI/CD with GitHub Actions, and testing.
+## Description
+This package provides a set of functionalities for controlling an Autonomous Mobile Robot (AMR).
 
-![GitHub top language](https://img.shields.io/github/languages/top/{Vishalsub}/{ros2-example}?color=yellow)
-![Bitbucket open issues](https://img.shields.io/bitbucket/issues/{Vishalsub}/{ros2-example})
-![GitHub forks](https://img.shields.io/github/forks/{Vishalsub}/{ros2-example}?style=social)
-![GitHub Repo stars](https://img.shields.io/github/stars/{Vishalsub}/{ros2-example}?style=social)
+
 
 ## Installation
 ```bash
@@ -53,7 +51,7 @@ ros2 run my_package my_node
 Thank you for considering contributing to this project! Please check out the Contributing Guidelines.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Code of Conduct
 Please adhere to our Code of Conduct to foster an open and welcoming environment.

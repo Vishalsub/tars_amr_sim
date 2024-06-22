@@ -32,8 +32,10 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+
+
 install(
-  DIRECTORY config description launch worlds meshes
+  DIRECTORY config description launch worlds meshes models
   DESTINATION share/${PROJECT_NAME}
 )
 

@@ -10,7 +10,7 @@ If you find a bug, please ensure the bug was not already reported by searching o
 
 ### Suggesting Enhancements
 
-If you have an idea for an enhancement, please post it in the [Issues](https://github.com/your_username/your_repository/issues) with the label "enhancement". Explain your idea and how it would be useful.
+If you have an idea for an enhancement, please post it in the [Issues](https://github.com/Vishalsub/tars_amr_sim/issues) with the label "enhancement". Explain your idea and how it would be useful.
 
 ### Pull Requests
 
