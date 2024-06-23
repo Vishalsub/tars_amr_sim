@@ -16,7 +16,7 @@ Default branch is `sim_template`, Change branch to `humble` or `jazzy`
 - [x] Add plugin for diff_drive, laser_scan, raw_camera
 - [x] Add control package
 - [x] Add world 
-- [x] Add depth vision
+- [ ] Add depth vision
 - [ ] integrate with ros2_controls
 - [ ] integrate with Slamtool box
 - [ ] Generate map
