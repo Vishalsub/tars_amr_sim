@@ -1,17 +1,50 @@
-# my_amr_robot
+# Tars-Autonomous Mobile Robot (Simulated Envirnoment)
+
+![example branch parameter](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?branch=feature-1)
 
 ## Description
-This package provides a set of functionalities for controlling an Autonomous Mobile Robot (AMR).
+This repo provides a set of functionalities for controlling an Autonomous Mobile Robot (AMR) in Sim-Env.It's works only on **ROS2 (humble & jazzy)** with integration of gazebo-classic 11, ignition(fortress) for humble and gz-sim(harmonic) for jazzy.
 
+Default branch is `sim_template`, Change branch to `humble` or `jazzy`
+
+
+### To-do
+
+- [x] Make urdf for diffdrive robot
+- [x] Integrattion ign gazebo to ros
+- [x] Add plugin for diff_drive, laser_scan, raw_camera
+- [x] Add control package
+- [x] Add world 
+- [x] Add depth vision
+- [ ] integrate with ros2_controls
+- [ ] integrate with Slamtool box
+- [ ] Generate map
+- [ ] Autonomous navigation with nav2
 
 
 ## Installation
 ```bash
-# Clone the repository
-git clone https://github.com/Vishalsub/ros2-example.git
+# Make dir
+mkdir -p my_ros2_ws/src
+
 # change dir
-cd my_ros2_projects
-   ```
+cd my_ros2_projects/src 
+
+# Clone the repository
+git clone https://github.com/Vishalsub/tars_amr_sim.git -b <branch_name>
+```
+
+### build from scratch(optional)
+```bash
+# Make dir
+mkdir -p my_ros2_ws/src
+
+# change dir
+cd my_ros2_projects/src 
+
+# Clone the repository
+git clone https://github.com/Vishalsub/tars_amr_sim.git 
+```
 
 ## How to Build and Run
 
@@ -20,7 +53,6 @@ cd my_ros2_projects
 Build the Docker image:
 
 ```bash
-
 cd docker  
 
 docker build -t my_ros2_project .
@@ -35,32 +67,36 @@ Source ROS2 environment and build:
 # source ros env
 source /opt/ros/humble/setup.bash
 
+# change dir
+cd my_ros2_projects/src 
+
 # buid ros workspace
-colcon build
+colcon build --symlink-install
 
 # source ros workspace
 source install/setup.bash
 
-# Run your first node
-ros2 run my_package my_node
+# Run your sim(it's ign gazebo)
+ros2 launch tars_amr_sim gz.launch.py
 ```
 
+> 💡 **NOTE:** Useful information that users should know, even when skimming content.
 
 
 ## Contributing
-Thank you for considering contributing to this project! Please check out the Contributing Guidelines.
+Thank you for considering contributing to this project! Please check out the [Contributing Guidelines](/CONTRIBUTING.md).
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](/LICENSE) file for details.
 
 ## Code of Conduct
-Please adhere to our Code of Conduct to foster an open and welcoming environment.
+Please adhere to our [Code of Conduct](/CODE_OF_CONDUCT.md) to foster an open and welcoming environment.
 
 ## Security Policy
-If you discover any security-related issues, please contact us at []. All security vulnerabilities will be promptly addressed.
+If you discover any security-related issues, please contact us at Discussion session. All security vulnerabilities will be promptly addressed.
 
 ## Issues
-To report a bug or request a feature, please open an Issue.
+To report a bug or request a feature, please open an [Issue](https://github.com/Vishalsub/tars_amr_sim/issues).
 
 ## Pull Requests
-We welcome Pull Requests! Please follow our Pull Request Template when submitting one.
+We welcome Pull Requests! Please follow our [Pull Request Template]()when submitting one.

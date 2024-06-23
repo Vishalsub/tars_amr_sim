@@ -13,7 +13,7 @@ from launch.actions import AppendEnvironmentVariable
 
 def generate_launch_description():
     # Get bcr_bot package's share directory path
-    tarsarm_sim_path = get_package_share_directory('tarsarm_sim')
+    tarsarm_sim_path = get_package_share_directory('tars_amr_sim')
 
     # Retrieve launch configuration arguments
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')

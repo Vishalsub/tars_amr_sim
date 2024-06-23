@@ -6,7 +6,7 @@ from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
-    bcr_bot_path = get_package_share_directory("tarsarm_sim")
+    tars_amr_path = get_package_share_directory("tars_amr_sim")
     position_x = LaunchConfiguration("position_x")
     position_y = LaunchConfiguration("position_y")
     orientation_yaw = LaunchConfiguration("orientation_yaw")
@@ -20,7 +20,7 @@ def generate_launch_description():
         name="robot_state_publisher",
         parameters=[{
             'robot_description': Command([
-                'xacro ', join(bcr_bot_path, 'description/robot.urdf.xacro'),
+                'xacro ', join(tars_amr_path, 'description/robot.urdf.xacro'),
                 ' two_d_lidar_enabled:=', two_d_lidar_enabled,
                 ' stereo_camera_enabled:=', stereo_camera_enabled,
                 ' odometry_source:=', odometry_source,
@@ -54,14 +54,14 @@ def generate_launch_description():
             "/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V",
             "/scan@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan",
             "/stereo_camera/camera/image_raw@sensor_msgs/msg/Image[ignition.msgs.Image",
-            "/world/empty_world/model/my_bot/joint_state@sensor_msgs/msg/JointState[ignition.msgs.Model"
+            "/world/default/model/my_bot/joint_state@sensor_msgs/msg/JointState[ignition.msgs.Model"
         ],
         remappings=[
-            ('/world/empty_world/model/my_bot/joint_state', '/joint_states'),
-            ('/stereo_camera/camera/image_raw', 'bcr_bot/stereo_camera/camera/image_raw'),
+            ('/world/default/model/my_bot/joint_state', '/joint_states'),
+            ('/stereo_camera/camera/image_raw', 'tars_amr_sim/stereo_camera/camera/image_raw'),
             ('/odom', '/odom'),
-            ('/scan', 'tarsarm_sim/scan'),
-            ('/cmd_vel', 'tarsarm_sim/cmd_vel'),
+            ('/scan', 'tars_amr_sim/scan'),
+            ('/cmd_vel', 'tars_amr_sim/cmd_vel'),
         ]
     )
 

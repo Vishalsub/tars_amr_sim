@@ -1,0 +1,35 @@
+name: Humble Source Build
+
+on:
+  push:
+    branches:
+      - humble
+  pull_request:
+    branches:
+      - humble
+
+jobs:
+  humble_source:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up ROS 2
+        uses: ros-tooling/setup-ros@v0.7
+        with:
+          required-ros-distributions: humble
+#      - name: ROS2 humbe
+#        uses: ros-tooling/action-ros-ci@v0.3
+#        with:
+#              package-name: my_package
+#              ref: humble
+#              target-ros2-distro: humble
+#              vcs-repo-file-url: https://raw.githubusercontent.com/ros2/ros2/humble/ros2.repos
+              
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y python3-colcon-common-extensions
+
+      - name: Build the workspace
+        run: colcon build --event-handlers console_cohesion+
+

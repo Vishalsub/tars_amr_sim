@@ -18,7 +18,7 @@ def get_xacro_to_doc(xacro_file_path, mappings):
 
 def generate_launch_description():
     # Get bcr_bot package's share directory path
-    tarsarm_sim_path = get_package_share_directory('tarsarm_sim')
+    tarsarm_sim_path = get_package_share_directory('tars_amr_sim')
     
     # Retrieve launch configuration arguments
     position_x = LaunchConfiguration("position_x")

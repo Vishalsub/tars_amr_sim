@@ -9,14 +9,14 @@
         <collision name="collision">
           <geometry>
             <mesh>
-              <uri>file:///mnt/d/ROS/dev_ws/src/tarsarm_sim/models/aws_robomaker_warehouse_ShelfF_01/meshes/aws_robomaker_warehouse_ShelfF_01_collision.DAE</uri>
+              <uri>file:///mnt/d/ROS/dev_ws/src/tars_amr_sim/models/aws_robomaker_warehouse_ShelfF_01/meshes/aws_robomaker_warehouse_ShelfF_01_collision.DAE</uri>
             </mesh>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <mesh>
-              <uri>file:///mnt/d/ROS/dev_ws/src/tarsarm_sim/models/aws_robomaker_warehouse_ShelfF_01/meshes/aws_robomaker_warehouse_ShelfF_01_visual.DAE</uri>
+              <uri>file:///mnt/d/ROS/dev_ws/src/tars_amr_sim/models/aws_robomaker_warehouse_ShelfF_01/meshes/aws_robomaker_warehouse_ShelfF_01_visual.DAE</uri>
             </mesh>
           </geometry>
         </visual>
@@ -29,14 +29,14 @@
         <collision name="collision">
           <geometry>
             <mesh>
-              <uri>file:///mnt/d/ROS/dev_ws/src/tarsarm_sim/models/aws_robomaker_warehouse_GroundB_01/meshes/aws_robomaker_warehouse_GroundB_01_collision.DAE</uri>
+              <uri>file:///mnt/d/ROS/dev_ws/src/tars_amr_sim/models/aws_robomaker_warehouse_GroundB_01/meshes/aws_robomaker_warehouse_GroundB_01_collision.DAE</uri>
             </mesh>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <mesh>
-              <uri>file:///mnt/d/ROS/dev_ws/src/tarsarm_sim/models/aws_robomaker_warehouse_GroundB_01/meshes/aws_robomaker_warehouse_GroundB_01_visual.DAE</uri>
+              <uri>file:///mnt/d/ROS/dev_ws/src/tars_amr_sim/models/aws_robomaker_warehouse_GroundB_01/meshes/aws_robomaker_warehouse_GroundB_01_visual.DAE</uri>
             </mesh>
           </geometry>
         </visual>
@@ -49,14 +49,14 @@
         <collision name="collision">
           <geometry>
             <mesh>
-              <uri>file:///mnt/d/ROS/dev_ws/src/tarsarm_sim/models/aws_robomaker_warehouse_ClutteringC_01/meshes/aws_robomaker_warehouse_ClutteringC_01_collision.DAE</uri>
+              <uri>file:///mnt/d/ROS/dev_ws/src/tars_amr_sim/models/aws_robomaker_warehouse_ClutteringC_01/meshes/aws_robomaker_warehouse_ClutteringC_01_collision.DAE</uri>
             </mesh>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <mesh>
-              <uri>file:///mnt/d/ROS/dev_ws/src/tarsarm_sim/models/aws_robomaker_warehouse_ClutteringC_01/meshes/aws_robomaker_warehouse_ClutteringC_01_visual.DAE</uri>
+              <uri>file:///mnt/d/ROS/dev_ws/src/tars_amr_sim/models/aws_robomaker_warehouse_ClutteringC_01/meshes/aws_robomaker_warehouse_ClutteringC_01_visual.DAE</uri>
             </mesh>
           </geometry>
         </visual>
