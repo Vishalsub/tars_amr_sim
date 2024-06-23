@@ -26,10 +26,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y python3-colcon-common-extensions
 
-      - name: Create ROS 2 workspace
+      - name: Prepare ROS 2 workspace
         run: |
-          mkdir -p ros2_ws/src
-          cp -r . ros2_ws/src/tars_amr_sim
+          mkdir -p ros2_ws/src/tars_amr_sim
+          cp -r * ros2_ws/src/tars_amr_sim
+        shell: bash
+        env:
+          LANG: en_US.UTF-8
+
 
       - name: Build the workspace
         run: |
