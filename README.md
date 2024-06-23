@@ -1,6 +1,6 @@
 # Tars-Autonomous Mobile Robot (Simulated Envirnoment)
 
-![example branch parameter](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?branch=feature-1)
+![example branch parameter](https://github.com/Vishalsub/tars_amr_sim/blob/humble/.github/workflows/main.yml/badge.svg?branch=humble)
 
 ## Description
 This repo provides a set of functionalities for controlling an Autonomous Mobile Robot (AMR) in Sim-Env.It's works only on **ROS2 (humble & jazzy)** with integration of gazebo-classic 11, ignition(fortress) for humble and gz-sim(harmonic) for jazzy.
