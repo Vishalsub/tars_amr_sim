@@ -20,7 +20,7 @@ def generate_launch_description():
         name="robot_state_publisher",
         parameters=[{
             'robot_description': Command([
-                'xacro ', join(tars_amr_path, 'description/robot.urdf.xacro'),
+                'xacro ', join(tars_amr_path, 'description/Diff_dirve_bot/robot.urdf.xacro'),
                 ' two_d_lidar_enabled:=', two_d_lidar_enabled,
                 ' stereo_camera_enabled:=', stereo_camera_enabled,
                 ' odometry_source:=', odometry_source,
