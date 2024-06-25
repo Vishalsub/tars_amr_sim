@@ -11,11 +11,11 @@ Default branch is `sim_template`, Change branch to `humble` or `jazzy` or `foxy`
 
 ### To-do
 
-- [x] Make urdf for diffdrive robot
-- [x] Integrattion ign gazebo to ros
-- [x] Add plugin for diff_drive, laser_scan, raw_camera
-- [x] Add control package
-- [x] Add world 
+- [ ] Make urdf for diffdrive robot
+- [ ] Integrattion ign gazebo to ros
+- [ ] Add plugin for diff_drive, laser_scan, raw_camera
+- [ ] Add control package
+- [ ] Add world 
 - [ ] Add depth vision
 - [ ] integrate with ros2_controls
 - [ ] integrate with Slamtool box
