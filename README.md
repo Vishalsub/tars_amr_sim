@@ -11,16 +11,20 @@ Default branch is `sim_template`, Change branch to `humble` or `jazzy` or `foxy`
 
 ### To-do
 
-- [ ] Make urdf for diffdrive robot
+- [ ] Make an urdf for the diffdrive robot.
 - [ ] Integrattion ign gazebo to ros
-- [ ] Add plugin for diff_drive, laser_scan, raw_camera
-- [ ] Add control package
-- [ ] Add world 
-- [ ] Add depth vision
+- [ ] Add plugins for diff_drive, laser_scan, and raw_camera.
+- [ ] Add the control package.
+- [ ] Add world
+- [ ] Add depth of vision.
 - [ ] integrate with ros2_controls
-- [ ] integrate with Slamtool box
+- [ ] integrate with the Slamtool box
 - [ ] Generate map
-- [ ] Autonomous navigation with nav2
+- [ ] Autonomous navigation with Nav2
+- [ ] Multiple robot control
+- [ ] Communicate with other robots.
+- [ ] interact with the real world
+- [ ] Add voice control system.
 
 
 > 💡 **NOTE:** Useful information that users should know, even when skimming content.
