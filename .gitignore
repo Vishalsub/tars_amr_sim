@@ -1,0 +1,8 @@
+# Misc
+.vscode/
+build
+
+build/
+# Python
+__pycache__/
+*.pyc

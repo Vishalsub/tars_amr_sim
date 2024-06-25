@@ -16,8 +16,8 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
 
     # Process the URDF file
-    pkg_path = os.path.join(get_package_share_directory('tarsarm_sim'))
-    xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
+    pkg_path = os.path.join(get_package_share_directory('tars_amr_sim'))
+    xacro_file = os.path.join(pkg_path,'description/Diff_dirve_bot','robot.urdf.xacro')
     robot_description_config = xacro.process_file(xacro_file)
     
     # Create a robot_state_publisher node
